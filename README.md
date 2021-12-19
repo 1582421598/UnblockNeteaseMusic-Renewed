@@ -15,6 +15,12 @@
 
 目前所有的可用环境变量：VIP，ENABLE_FLAC，YOUTUBE_KEY，QQ_COOKIE，SIGN_KEY，SIGN_CERT
 
+PC版网易云需要同时启用https，示例如下，如果按例子运行，http代理端口应填23331
+
+```bash
+node app.js -p 23331:23332 -o kugou bilibili
+```
+
 使用 npx
 
 ```
@@ -53,14 +59,12 @@ optional arguments:
   -h, --help                      output usage information
 ```
 
-## 使用
-
 ### 音源清单
 
 将有兴趣的音源代号用 `-o` 传入 UNM 即可使用，像这样：
 
 ```bash
-node app.js -o bilibili ytdlp
+node app.js -o kugou bilibili
 ```
 
 | 名称                        | 代号         | 默认启用 | 注意事项                                                                       |
@@ -86,6 +90,8 @@ node app.js -o bilibili ytdlp
 | YOUTUBE_KEY      | str  | Youtube 音源的 Data API v3 Key                                                                    | `YOUTUBE_KEY="<your_data_api_key>"`                              |
 | SIGN_CERT        | path | 自定义证书文件                                                                                    | `SIGN_CERT="./server.crt"`                                       |
 | SIGN_KEY         | path | 自定义密钥文件                                                                                    | `SIGN_KEY="./server.key"`                                        |
+
+## 使用
 
 **警告：本项目不提供线上 demo，请不要轻易信任使用他人提供的公开代理服务，以免发生安全问题**
 
