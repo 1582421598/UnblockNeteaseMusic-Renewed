@@ -3,6 +3,7 @@
 # UnblockNeteaseMusic
 
 解锁网易云音乐客户端变灰歌曲
+本版本为原项目的个人修改版本，不定期更新一些自己觉得OK的功能。
 
 ## 特性
 
@@ -53,6 +54,38 @@ optional arguments:
 ```
 
 ## 使用
+
+### 音源清单
+
+将有兴趣的音源代号用 `-o` 传入 UNM 即可使用，像这样：
+
+```bash
+node app.js -o bilibili ytdlp
+```
+
+| 名称                        | 代号         | 默认启用 | 注意事项                                                                       |
+| --------------------------- | ------------ | -------- | ------------------------------------------------------------------------------ |
+| QQ 音乐                     | `qq`         |          | 需要准备自己的 `QQ_COOKIE`（请参阅下方〈环境变量〉处）。                       |
+| 酷狗音乐                    | `kugou`      | ✅       |                                                                                |
+| 酷我音乐                    | `kuwo`       | ✅       |                                                                                |
+| 咪咕音乐                    | `migu`       | ✅       | 需要准备自己的 `MIGU_COOKIE`（请参阅下方〈环境变量〉处）。                     |
+| JOOX                        | `joox`       |          | 需要准备自己的 `JOOX_COOKIE`（请参阅下方〈环境变量〉处）。似乎有严格地区限制。 |
+| YouTube（纯 JS 解析方式）   | `youtube`    |          | 未测试。                                                                       |
+| B 站音乐                    | `bilibili`   | ✅       |                                                                                |
+| 第三方网易云 API            | `pyncmd`     |          | 有地区限制。                                                                   |
+
+### 环境变量
+
+| 变量名称         | 类型 | 描述                                                                                              | 示例                                                             |
+| ---------------- | ---- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| ENABLE_FLAC      | bool | 激活无损音质获取                                                                                  | `ENABLE_FLAC=true`                                               |
+| ENABLE_LOCAL_VIP | bool | 激活本地黑胶 VIP                                                                                  | `ENABLE_LOCAL_VIP=true`                                          |
+| JOOX_COOKIE      | str  | JOOX 音源的 wmid 和 session_key cookie                                                            | `JOOX_COOKIE="wmid=<your_wmid>; session_key=<your_session_key>"` |
+| MIGU_COOKIE      | str  | 咪咕音源的 aversionid cookie                                                                      | `MIGU_COOKIE="<your_aversionid>"`                                |
+| QQ_COOKIE        | str  | QQ 音源的 uin 和 qm_keyst cookie                                                                  | `QQ_COOKIE="uin=<your_uin>; qm_keyst=<your_qm_keyst>"`           |
+| YOUTUBE_KEY      | str  | Youtube 音源的 Data API v3 Key                                                                    | `YOUTUBE_KEY="<your_data_api_key>"`                              |
+| SIGN_CERT        | path | 自定义证书文件                                                                                    | `SIGN_CERT="./server.crt"`                                       |
+| SIGN_KEY         | path | 自定义密钥文件                                                                                    | `SIGN_KEY="./server.key"`                                        |
 
 **警告：本项目不提供线上 demo，请不要轻易信任使用他人提供的公开代理服务，以免发生安全问题**
 

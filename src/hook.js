@@ -5,7 +5,7 @@ const request = require('./request')
 const match = require('./provider/match')
 const querystring = require('querystring')
 
-const VIP = (process.env.VIP || '').toLowerCase() === 'true'
+const VIP = (process.env.ENABLE_LOCAL_VIP || '').toLowerCase() === 'true'
 
 const hook = {
 	request: {
