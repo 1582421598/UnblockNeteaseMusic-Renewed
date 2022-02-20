@@ -10,7 +10,7 @@ const init = () => {
 
 const track = (info) => {
 	const url =
-		'https://mos9527.tooo.top/ncm/pyncm/track/GetTrackAudio?song_ids=' +
+		'https://service-ghlrryee-1308098780.gz.apigw.tencentcs.com/release/pyncmd/track/GetTrackAudio?song_ids=' +
 		info.id +
 		'&bitrate=' + ['999000', '320000'].slice(
 			select.ENABLE_FLAC ? 0 : 1,
