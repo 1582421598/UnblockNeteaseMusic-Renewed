@@ -13,13 +13,12 @@ const provider = {
 	youtube: require('./youtube'),
 	bilibili: require('./bilibili'),
 	pyncmd: require('./pyncmd'),
-	pyncmd2: require('./pyncmd2'),
-	pyncmd3: require('./pyncmd3')
+	pyncmd2: require('./pyncmd2')
 }
 
 const match = (id, source, data) => {
 	let meta = {}
-	const candidate = (source || global.source || ['pyncmd3','pyncmd2','pyncmd', 'qq', 'kuwo', 'bilibili']).filter(name => name in provider)
+	const candidate = (source || global.source || ['pyncmd2','pyncmd', 'qq', 'kuwo', 'bilibili']).filter(name => name in provider)
 	return find(id, data)
 		.then(info => {
 			meta = info

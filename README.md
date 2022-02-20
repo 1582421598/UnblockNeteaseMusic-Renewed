@@ -78,7 +78,6 @@ node app.js -o kugou bilibili
 | B 站音乐                    | `bilibili`   | ✅       |                                                                                |
 | 第三方网易云 API            | `pyncmd`     | ✅       | 有地区限制。                                                                   |
 | 第三方网易云 API2           | `pyncmd2`    | ✅       |                                                                                |
-| 第三方网易云 API3           | `pyncmd3`    | ✅       |                                                                                |
 
 ### 环境变量
 

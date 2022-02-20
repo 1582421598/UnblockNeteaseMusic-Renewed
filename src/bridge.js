@@ -12,8 +12,7 @@ const router = {
 	joox: require('./provider/joox'),
 	bilibili: require('./provider/bilibili'),
 	pyncmd: require('./provider/pyncmd'),
-	pyncmd2: require('./provider/pyncmd2'),
-	pyncmd3: require('./provider/pyncmd3')
+	pyncmd2: require('./provider/pyncmd2')
 }
 
 const distribute = (url, router) =>
