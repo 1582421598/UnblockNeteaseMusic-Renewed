@@ -6,9 +6,9 @@ const cache = require('../cache');
 const headers = {
 	origin: 'http://music.migu.cn/',
 	referer: 'http://m.music.migu.cn/v3/',
-	// 'cookie': 'migu_music_sid=' + (process.env.MIGU_COOKIE || null)
+	// cookie: 'migu_music_sid=' + (process.env.MIGU_COOKIE || null),
 	aversionid: process.env.MIGU_COOKIE || null,
-	channel: '0',
+	channel: '0146921',
 };
 
 const format = (song) => {
@@ -54,11 +54,9 @@ const single = (id, format) => {
 	//	'https://music.migu.cn/v3/api/music/audioPlayer/getPlayInfo?' +
 	//	'dataType=2&' + crypto.miguapi.encryptBody({copyrightId: id.toString(), type: format})
 
-	const randomInt = Math.random().toString().substr(2);
 	const url =
-		'https://app.c.nf.migu.cn/MIGUM2.0/strategy/listen-url/v2.2?lowerQualityContentId=' +
-		randomInt +
-		'&netType=01&resourceType=E&songId=' +
+		'https://app.c.nf.migu.cn/MIGUM2.0/strategy/listen-url/v2.4?' +
+		'netType=01&resourceType=2&songId=' +
 		id.toString() +
 		'&toneFlag=' +
 		format;
@@ -69,9 +67,9 @@ const single = (id, format) => {
 			// const {playUrl} = jsonBody.data
 			// return playUrl ? encodeURI('http:' + playUrl) : Promise.reject()
 			const {
-				formatType
+				audioFormatType
 			} = jsonBody.data;
-			if (formatType !== format) return Promise.reject();
+			if (audioFormatType !== format) return Promise.reject();
 			else if (url) {
 				return {
 					url: jsonBody.data.url,
@@ -84,7 +82,7 @@ const single = (id, format) => {
 const track = (id) =>
 	Promise.all(
 		// [3, 2, 1].slice(select.ENABLE_FLAC ? 0 : 1)
-		['ZQ', 'SQ', 'HQ', 'PQ']
+		['ZQ24', 'SQ', 'HQ', 'PQ']
 		.slice(select.ENABLE_FLAC ? 0 : 2)
 		.map((format) => single(id, format).catch(() => null))
 	)
