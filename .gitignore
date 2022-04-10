@@ -1,3 +1,6 @@
+#cert private key
+ca.key
+
 # Logs
 logs
 *.log
