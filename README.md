@@ -72,11 +72,11 @@ node app.js -o kugou bilibili
 | QQ 音乐                     | `qq`         | ✅       | 需要准备自己的 `QQ_COOKIE`（请参阅下方〈环境变量〉处）。                       |
 | 酷狗音乐                    | `kugou`      |          |                                                                                |
 | 酷我音乐                    | `kuwo`       | ✅       |                                                                                |
-| 咪咕音乐                    | `migu`       |          | 需要准备自己的 `MIGU_COOKIE`（请参阅下方〈环境变量〉处）。                     |
+| 咪咕音乐                    | `migu`       |          |                                                                                |
 | JOOX                        | `joox`       |          | 需要准备自己的 `JOOX_COOKIE`（请参阅下方〈环境变量〉处）。似乎有严格地区限制。 |
-| YouTube（纯 JS 解析方式）   | `youtube`    |          | 未测试。                                                                       |
+| YouTube（纯 JS 解析方式）   | `youtube`    |          | 需要 Google 认定的**非中国大陆区域** IP 地址。                                |
 | B 站音乐                    | `bilibili`   | ✅       |                                                                                |
-| 第三方网易云 API            | `pyncmd`     | ✅       | 有地区限制。                                                                   |
+| 第三方网易云 API            | `pyncmd`     | ✅       |                                                                                |
 | 第三方网易云 API2           | `pyncmd2`    | ✅       |                                                                                |
 
 ### 环境变量
@@ -86,7 +86,6 @@ node app.js -o kugou bilibili
 | ENABLE_FLAC      | bool | 激活无损音质获取                                                                                  | `ENABLE_FLAC=true`                                               |
 | ENABLE_LOCAL_VIP | bool | 激活本地黑胶 VIP                                                                                  | `ENABLE_LOCAL_VIP=true`                                          |
 | JOOX_COOKIE      | str  | JOOX 音源的 wmid 和 session_key cookie                                                            | `JOOX_COOKIE="wmid=<your_wmid>; session_key=<your_session_key>"` |
-| MIGU_COOKIE      | str  | 咪咕音源的 aversionid cookie                                                                      | `MIGU_COOKIE="<your_aversionid>"`                                |
 | QQ_COOKIE        | str  | QQ 音源的 uin 和 qm_keyst cookie                                                                  | `QQ_COOKIE="uin=<your_uin>; qm_keyst=<your_qm_keyst>"`           |
 | YOUTUBE_KEY      | str  | Youtube 音源的 Data API v3 Key                                                                    | `YOUTUBE_KEY="<your_data_api_key>"`                              |
 | SIGN_CERT        | path | 自定义证书文件                                                                                    | `SIGN_CERT="./server.crt"`                                       |
