@@ -77,7 +77,6 @@ node app.js -o kugou bilibili
 | YouTube（纯 JS 解析方式）   | `youtube`    |          | 需要 Google 认定的**非中国大陆区域** IP 地址。                                |
 | B 站音乐                    | `bilibili`   | ✅       |                                                                                |
 | 第三方网易云 API            | `pyncmd`     | ✅       |                                                                                |
-| 第三方网易云 API2           | `pyncmd2`    | ✅       |                                                                                |
 
 ### 环境变量
 
