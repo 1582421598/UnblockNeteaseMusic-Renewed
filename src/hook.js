@@ -94,6 +94,7 @@ hook.request.before = ctx => {
 			.then(body => {
 				if ('x-napm-retry' in req.headers) delete req.headers['x-napm-retry']
 				req.headers['X-Real-IP'] = '119.233.233.233'
+				req.headers['Accept-Encoding'] = 'deflate'; // https://blog.csdn.net/u013022222/article/details/51707352
 				if (req.url.includes('stream')) return // look living eapi can not be decrypted
 				if (body) {
 					let data = null
@@ -115,11 +116,14 @@ hook.request.before = ctx => {
 
 					if (netease.path == '/api/song/enhance/download/url')
 						return pretendPlay(ctx)
+					else if (netease.path.includes("/api/song/enhance/player/url"))
+						return pretendDownload(ctx)
 				}
 			})
 			.catch(error => console.log(error, req.url))
 	} else if ((hook.target.host.has(url.hostname)) && (url.path.startsWith('/weapi/') || url.path.startsWith('/api/'))) {
 		req.headers['X-Real-IP'] = '119.233.233.233'
+		req.headers['Accept-Encoding'] = 'deflate'; // https://blog.csdn.net/u013022222/article/details/51707352
 		ctx.netease = {
 			web: true,
 			path: url.path.replace(/^\/weapi\//, '/api/').replace(/\?.+$/, '').replace(/\/\d*$/, '')
@@ -196,9 +200,13 @@ hook.request.after = ctx => {
 				const inject = (key, value) => {
 					if (typeof (value) === 'object' && value != null) {
 						if ('cp' in value) value['cp'] = 1
-						if ('dl' in value && 'downloadMaxbr' in value && value['dl'] < value['downloadMaxbr']) value['dl'] = value['downloadMaxbr']
 						if ('fee' in value) value['fee'] = 0
+						if ('dl' in value && 'downloadMaxbr' in value && value['dl'] < value['downloadMaxbr']) value['dl'] = value['downloadMaxbr']
 						if ('pl' in value && 'playMaxbr' in value && value['pl'] < value['playMaxbr']) value['pl'] = value['playMaxbr']
+						if ('fl' in value && 'maxbr' in value && value['fl'] < value['maxbr']) value['fl'] = value['maxbr']
+						if ('dlLevel' in value && 'downloadMaxBrLevel' in value) value['dlLevel'] = value['downloadMaxBrLevel']
+						if ('plLevel' in value && 'playMaxBrLevel' in value) value['plLevel'] = value['playMaxBrLevel']
+						if ('flLevel' in value && 'maxBrLevel' in value) value['flLevel'] = value['maxBrLevel']
 						if ('sp' in value && 'st' in value && 'subp' in value) { // batch modify
 							value['sp'] = 7
 							value['st'] = 0
@@ -263,7 +271,7 @@ hook.negotiate.before = ctx => {
 	}
 }
 
-const pretendPlay = ctx => {
+const pretendPlay = ctx => { //Deprecated
 	const {
 		req,
 		netease
@@ -290,6 +298,42 @@ const pretendPlay = ctx => {
 		netease.param = {
 			ids: `["${id}"]`,
 			br,
+			e_r,
+			header
+		}
+		query = crypto.eapi.encryptRequest(turn, netease.param)
+	}
+	req.url = query.url
+	req.body = query.body + netease.pad
+}
+
+const pretendDownload = ctx => {
+	const {
+		req,
+		netease
+	} = ctx
+	const turn = 'https://music.163.com/api/song/enhance/download/url/v1'
+	let query = null
+	if (netease.forward) {
+		const {
+			ids,
+			br
+		} = netease.param
+		netease.param = {
+			id: JSON.parse(ids)[0],
+			br
+		}
+		query = crypto.linuxapi.encryptRequest(turn, netease.param)
+	} else {
+		const {
+			ids,
+			level,
+			e_r,
+			header
+		} = netease.param
+		netease.param = {
+			id: JSON.parse(ids)[0],
+			level,
 			e_r,
 			header
 		}
@@ -411,7 +455,12 @@ const tryMatch = ctx => {
 	}
 
 	if (!Array.isArray(jsonBody.data)) {
-		tasks = [inject(jsonBody.data)]
+		if (netease.path.includes("/api/song/enhance/player/url") && netease.jsonBody.data.level === "hires") {
+			netease.jsonBody.data = [netease.jsonBody.data]
+			tasks = netease.jsonBody.data.map(item => inject(item))
+		} else {
+			tasks = [inject(jsonBody.data)]
+		}
 	} else if (netease.path.includes('download')) {
 		jsonBody.data = jsonBody.data[0]
 		tasks = [inject(jsonBody.data)]
