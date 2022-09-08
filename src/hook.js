@@ -6,6 +6,7 @@ const match = require('./provider/match')
 const querystring = require('querystring')
 
 const VIP = (process.env.ENABLE_LOCAL_VIP || '').toLowerCase() === 'true'
+const HIRES = (process.env.ENABLE_HIRES || '').toLowerCase() === 'true'
 
 const hook = {
 	request: {
@@ -116,7 +117,7 @@ hook.request.before = ctx => {
 
 					if (netease.path == '/api/song/enhance/download/url')
 						return pretendPlay(ctx)
-					else if (netease.path.includes("/api/song/enhance/player/url"))
+					else if (HIRES && netease.path.includes("/api/song/enhance/player/url"))
 						return pretendDownload(ctx)
 				}
 			})
@@ -204,9 +205,11 @@ hook.request.after = ctx => {
 						if ('dl' in value && 'downloadMaxbr' in value && value['dl'] < value['downloadMaxbr']) value['dl'] = value['downloadMaxbr']
 						if ('pl' in value && 'playMaxbr' in value && value['pl'] < value['playMaxbr']) value['pl'] = value['playMaxbr']
 						if ('fl' in value && 'maxbr' in value && value['fl'] < value['maxbr']) value['fl'] = value['maxbr']
-						if ('dlLevel' in value && 'downloadMaxBrLevel' in value) value['dlLevel'] = value['downloadMaxBrLevel']
-						if ('plLevel' in value && 'playMaxBrLevel' in value) value['plLevel'] = value['playMaxBrLevel']
-						if ('flLevel' in value && 'maxBrLevel' in value) value['flLevel'] = value['maxBrLevel']
+						if (HIRES) {
+							if ('dlLevel' in value && 'downloadMaxBrLevel' in value && value['downloadMaxBrLevel'] !== 'none') value['dlLevel'] = value['downloadMaxBrLevel']
+							if ('plLevel' in value && 'playMaxBrLevel' in value && value['playMaxBrLevel'] !== 'none') value['plLevel'] = value['playMaxBrLevel']
+							if ('flLevel' in value && 'maxBrLevel' in value && value['maxBrLevel'] !== 'none') value['flLevel'] = value['maxBrLevel']
+						}
 						if ('sp' in value && 'st' in value && 'subp' in value) { // batch modify
 							value['sp'] = 7
 							value['st'] = 0
@@ -455,9 +458,9 @@ const tryMatch = ctx => {
 	}
 
 	if (!Array.isArray(jsonBody.data)) {
-		if (netease.path.includes("/api/song/enhance/player/url") && netease.jsonBody.data.level === "hires") {
-			netease.jsonBody.data = [netease.jsonBody.data]
-			tasks = netease.jsonBody.data.map(item => inject(item))
+		if (HIRES && netease.path.includes("/api/song/enhance/player/url")) {
+			jsonBody.data = [jsonBody.data]
+			tasks = jsonBody.data.map(item => inject(item))
 		} else {
 			tasks = [inject(jsonBody.data)]
 		}

@@ -13,7 +13,7 @@
 
 ## 运行
 
-目前所有的可用环境变量：VIP，ENABLE_FLAC，YOUTUBE_KEY，QQ_COOKIE，SIGN_KEY，SIGN_CERT
+目前所有的可用环境变量：ENABLE_LOCAL_VIP，ENABLE_FLAC，ENABLE_HIRES，YOUTUBE_KEY，QQ_COOKIE，SIGN_KEY，SIGN_CERT
 
 PC版网易云需要同时启用https，示例如下，如果按例子运行，http代理端口应填23331
 
@@ -83,6 +83,7 @@ node app.js -o kugou bilibili
 | 变量名称         | 类型 | 描述                                                                                              | 示例                                                             |
 | ---------------- | ---- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
 | ENABLE_FLAC      | bool | 激活无损音质获取                                                                                  | `ENABLE_FLAC=true`                                               |
+| ENABLE_HIRES     | bool | 激活Hi-Res音质获取                                                                                | `ENABLE_HIRES=true`                                               |
 | ENABLE_LOCAL_VIP | bool | 激活本地黑胶 VIP                                                                                  | `ENABLE_LOCAL_VIP=true`                                          |
 | JOOX_COOKIE      | str  | JOOX 音源的 wmid 和 session_key cookie                                                            | `JOOX_COOKIE="wmid=<your_wmid>; session_key=<your_session_key>"` |
 | MIGU_COOKIE      | str  | 咪咕音源的 aversionid cookie                                                                      | `MIGU_COOKIE="<your_aversionid>"`                                |
