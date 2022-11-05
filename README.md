@@ -69,7 +69,7 @@ node app.js -o kugou bilibili
 
 | 名称                        | 代号         | 默认启用 | 注意事项                                                                       |
 | --------------------------- | ------------ | -------- | ------------------------------------------------------------------------------ |
-| QQ 音乐                     | `qq`         | ✅       | 需要准备自己的 `QQ_COOKIE`（请参阅下方〈环境变量〉处）。                       |
+| QQ 音乐                     | `qq`         | ✅       | 需要准备自己的 `QQ_COOKIE`（请参阅下方〈环境变量〉处）。必须使用 QQ 登录。     |
 | 酷狗音乐                    | `kugou`      |          |                                                                                |
 | 酷我音乐                    | `kuwo`       | ✅       |                                                                                |
 | 咪咕音乐                    | `migu`       |          | 需要准备自己的 `MIGU_COOKIE`（请参阅下方〈环境变量〉处）。                     |
@@ -80,17 +80,18 @@ node app.js -o kugou bilibili
 
 ### 环境变量
 
-| 变量名称         | 类型 | 描述                                                                                              | 示例                                                             |
-| ---------------- | ---- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| ENABLE_FLAC      | bool | 激活无损音质获取                                                                                  | `ENABLE_FLAC=true`                                               |
-| ENABLE_HIRES     | bool | 激活Hi-Res音质获取                                                                                | `ENABLE_HIRES=true`                                               |
-| ENABLE_LOCAL_VIP | bool | 激活本地黑胶 VIP                                                                                  | `ENABLE_LOCAL_VIP=true`                                          |
-| JOOX_COOKIE      | str  | JOOX 音源的 wmid 和 session_key cookie                                                            | `JOOX_COOKIE="wmid=<your_wmid>; session_key=<your_session_key>"` |
-| MIGU_COOKIE      | str  | 咪咕音源的 aversionid cookie                                                                      | `MIGU_COOKIE="<your_aversionid>"`                                |
-| QQ_COOKIE        | str  | QQ 音源的 uin 和 qm_keyst cookie                                                                  | `QQ_COOKIE="uin=<your_uin>; qm_keyst=<your_qm_keyst>"`           |
-| YOUTUBE_KEY      | str  | Youtube 音源的 Data API v3 Key                                                                    | `YOUTUBE_KEY="<your_data_api_key>"`                              |
-| SIGN_CERT        | path | 自定义证书文件                                                                                    | `SIGN_CERT="./server.crt"`                                       |
-| SIGN_KEY         | path | 自定义密钥文件                                                                                    | `SIGN_KEY="./server.key"`                                        |
+| 变量名称                     | 类型 | 描述                                                                                              | 示例                                                             |
+| ---------------------------- | ---- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| ENABLE_FLAC                  | bool | 激活无损音质获取                                                                                  | `ENABLE_FLAC=true`                                               |
+| ENABLE_HIRES                 | bool | 激活Hi-Res音质获取                                                                                | `ENABLE_HIRES=true`                                              |
+| ENABLE_LOCAL_VIP             | bool | 激活本地黑胶 VIP                                                                                  | `ENABLE_LOCAL_VIP=true`                                          |
+| DISABLE_UPGRADE_CHECK        | bool | 禁用更新检测。                                                                                    | `DISABLE_UPGRADE_CHECK=true`                                     |
+| JOOX_COOKIE                  | str  | JOOX 音源的 wmid 和 session_key cookie                                                            | `JOOX_COOKIE="wmid=<your_wmid>; session_key=<your_session_key>"` |
+| MIGU_COOKIE                  | str  | 咪咕音源的 aversionid cookie                                                                      | `MIGU_COOKIE="<your_aversionid>"`                                |
+| QQ_COOKIE                    | str  | QQ 音源的 uin 和 qm_keyst cookie                                                                  | `QQ_COOKIE="uin=<your_uin>; qm_keyst=<your_qm_keyst>"`           |
+| YOUTUBE_KEY                  | str  | Youtube 音源的 Data API v3 Key                                                                    | `YOUTUBE_KEY="<your_data_api_key>"`                              |
+| SIGN_CERT                    | path | 自定义证书文件                                                                                    | `SIGN_CERT="./server.crt"`                                       |
+| SIGN_KEY                     | path | 自定义密钥文件                                                                                    | `SIGN_KEY="./server.key"`                                        |
 
 ## 使用
 
