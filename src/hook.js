@@ -68,8 +68,8 @@ hook.target.path = new Set([
     "/api/v1/search/get",
     "/api/v1/search/song/get",
     "/api/search/complex/get",
-    '/api/search/complex/page',
-	'/api/search/song/page',
+    "/api/search/complex/page",
+    "/api/search/song/page",
     "/api/cloudsearch/pc",
     "/api/v1/playlist/manipulate/tracks",
     "/api/song/like",
@@ -178,8 +178,8 @@ hook.request.before = (ctx) => {
                     if (DISABLE_UPGRADE_CHECK) {
                         if (
                             netease.path.match(
-								/^\/api(\/v1)?\/(android|ios|osx|pc)\/(upgrade|version)/
-							)
+                                /^\/api(\/v1)?\/(android|ios|osx|pc)\/(upgrade|version)/
+                            )
                         )
                             ctx.req.url = "http://0.0.0.0";
                     }
@@ -272,9 +272,16 @@ hook.request.after = (ctx) => {
                                     info.data.musicPackage.expireTime =
                                         expireTime;
                                     info.data.musicPackage.vipCode = 230;
+                                    info.data.musicPackage.vipLevel = 7;
+                                    info.data.musicPackage.isSign = true;
+                                    info.data.musicPackage.isSignIap = true;
 
                                     info.data.associator.expireTime =
                                         expireTime;
+                                    info.data.associator.vipCode = 100;
+                                    info.data.associator.vipLevel = 7;
+                                    info.data.associator.isSign = true;
+                                    info.data.associator.isSignIap = true;
 
                                     netease.jsonBody[
                                         "/api/music-vip-membership/client/vip/info"
