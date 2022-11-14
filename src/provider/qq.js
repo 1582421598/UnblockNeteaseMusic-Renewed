@@ -17,11 +17,20 @@ var myguid = String(
 var weight = 0;
 
 const format = (song) => ({
-    id: { song: song.mid, file: song.mid },
-    name: song.name,
+    id: {
+        song: song.mid,
+        file: song.file.media_mid,
+    },
+    name: song.title,
     duration: song.interval * 1000,
-    album: { id: song.album.mid, name: song.album.name },
-    artists: song.singer.map(({ mid, name }) => ({ id: mid, name })),
+    album: {
+        id: song.album.mid,
+        name: song.album.title,
+    },
+    artists: song.singer.map(({ mid, title }) => ({
+        id: mid,
+        title,
+    })),
     weight: 0,
 });
 
@@ -46,14 +55,10 @@ const search = (info) => {
     return request("GET", url, headers)
         .then((response) => response.json())
         .then((jsonBody) => {
-            const result = jsonBody.search.data.body.song.list
-                .slice(0, 5)
-                .map(format);
-            const matched = select.selectList(result, info);
+            const list = jsonBody.search.data.body.song.list.map(format);
+            const matched = select.selectList(list, info);
             weight = matched.weight;
-            return matched
-                ? matched.id
-                : Promise.reject("qqmusic: do_search: not matched.");
+            return matched ? matched.id : Promise.reject();
         });
 };
 
