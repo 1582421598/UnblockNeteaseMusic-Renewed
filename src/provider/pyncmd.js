@@ -4,7 +4,7 @@ const cache = require("../cache");
 
 const track = (info) => {
     const url =
-        "https://76.76.21.114/api/pyncm?module=track&method=GetTrackAudio&song_ids=" +
+        "http://76.76.21.114/api/pyncm?module=track&method=GetTrackAudio&song_ids=" +
         info.id +
         "&bitrate=" +
         ["999000", "320000"].slice(
