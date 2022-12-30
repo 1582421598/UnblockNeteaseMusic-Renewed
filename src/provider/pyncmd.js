@@ -4,7 +4,7 @@ const cache = require("../cache");
 
 const track = (info) => {
     const url =
-        "http://76.76.21.114/api/pyncm?module=track&method=GetTrackAudio&song_ids=" +
+        "https://76.76.21.114/api/pyncm?module=track&method=GetTrackAudio&song_ids=" +
         info.id +
         "&bitrate=" +
         ["999000", "320000"].slice(
@@ -12,7 +12,7 @@ const track = (info) => {
             select.ENABLE_FLAC ? 1 : 2
         );
     const headers = {
-        Host: "music.163-my-beloved.com",
+        Host: "pyncmd.gov.cn",
     };
     return request("GET", url, headers)
         .then((response) => response.json())
