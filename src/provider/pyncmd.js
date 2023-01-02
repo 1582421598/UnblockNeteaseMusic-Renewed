@@ -4,16 +4,19 @@ const cache = require("../cache");
 
 const track = (info) => {
     const url =
-        "http://76.76.21.114/api/pyncm?module=track&method=GetTrackAudio&song_ids=" +
+        ["https://pyncmd.vercel.app", "http://76.76.21.114"].slice(
+            select.CAN_ACCESS_GOOGLE ? 0 : 1,
+            select.CAN_ACCESS_GOOGLE ? 1 : 2
+        ) +
+        "/api/pyncm?module=track&method=GetTrackAudio&song_ids=" +
         info.id +
         "&bitrate=" +
         ["999000", "320000"].slice(
             select.ENABLE_FLAC ? 0 : 1,
             select.ENABLE_FLAC ? 1 : 2
         );
-    const headers = {
-        Host: "pyncmd.gov.cn",
-    };
+    let headers = null;
+    if (!select.CAN_ACCESS_GOOGLE) headers = { host: "pyncmd.gov.cn" };
     return request("GET", url, headers)
         .then((response) => response.json())
         .then((jsonBody) => {
