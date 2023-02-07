@@ -71,7 +71,7 @@ const single = (id, format) => {
             param: {
                 guid: myguid,
                 loginflag: 1,
-                filename: [format.join(id.file)],
+                filename: format[0] ? [format.join(id.file)] : null,
                 songmid: [id.song],
                 songtype: [0],
                 uin,
@@ -88,12 +88,19 @@ const single = (id, format) => {
         .then((response) => response.json())
         .then((jsonBody) => {
             const { sip, midurlinfo } = jsonBody.req_0.data;
-            return midurlinfo[0].purl
-                ? {
-                      url: sip[0] + midurlinfo[0].purl,
-                      weight: weight,
-                  }
-                : Promise.reject();
+
+            if (!midurlinfo[0].purl) return Promise.reject();
+
+            const playurl = sip[0] + midurlinfo[0].purl;
+            const header = {
+                range: "bytes=0-8191",
+                "accept-encoding": "identity",
+            };
+            return request("GET", playurl, header).then((response) => {
+                if (response.statusCode < 200 || response.statusCode > 299)
+                    return Promise.reject();
+                else return { url: playurl, weight: weight };
+            });
         });
 };
 
@@ -103,7 +110,9 @@ const track = (id) => {
         [
             ["F000", ".flac"],
             ["M800", ".mp3"],
+            ['M500', '.mp3'],
             ["C400", ".m4a"],
+            [null, null],
         ]
             .slice(
                 headers.cookie || typeof window !== "undefined"

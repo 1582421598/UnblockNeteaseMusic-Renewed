@@ -85,6 +85,7 @@ node app.js -o kugou bilibili
 | ENABLE_FLAC                  | bool | 激活无损音质获取                                                                                  | `ENABLE_FLAC=true`                                               |
 | ENABLE_HIRES                 | bool | 激活Hi-Res音质获取                                                                                | `ENABLE_HIRES=true`                                              |
 | ENABLE_LOCAL_VIP             | bool | 激活本地黑胶 VIP                                                                                  | `ENABLE_LOCAL_VIP=true`                                          |
+| BLOCK_ADS                    | bool | 屏蔽应用内部分广告                                                                                | `BLOCK_ADS=true`                                                 |
 | DISABLE_UPGRADE_CHECK        | bool | 禁用更新检测。                                                                                    | `DISABLE_UPGRADE_CHECK=true`                                     |
 | JOOX_COOKIE                  | str  | JOOX 音源的 wmid 和 session_key cookie                                                            | `JOOX_COOKIE="wmid=<your_wmid>; session_key=<your_session_key>"` |
 | MIGU_COOKIE                  | str  | 咪咕音源的 aversionid cookie                                                                      | `MIGU_COOKIE="<your_aversionid>"`                                |
