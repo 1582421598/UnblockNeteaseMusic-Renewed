@@ -79,6 +79,7 @@ hook.target.path = new Set([
     "/api/playlist/v4/detail",
     "/api/v1/radio/get",
     "/api/v1/discovery/recommend/songs",
+    '/api/vipauth/app/auth/query',
 ]);
 
 const domainList = [
@@ -311,6 +312,17 @@ hook.request.after = (ctx) => {
                     else if (netease.path == "/api/song/like")
                         return tryLike(ctx);
                 } else if (netease.path.includes("url")) return tryMatch(ctx);
+
+                else if (netease.path.includes('/usertool/sound/'))
+					return unblockSoundEffects(netease.jsonBody);
+				else if (netease.path.includes('batch')) {
+					for (const key in netease.jsonBody) {
+						if (key.includes('/usertool/sound/'))
+							unblockSoundEffects(netease.jsonBody[key]);
+					}
+				} else if (netease.path.includes('/vipauth/app/auth/query'))
+					return unblockLyricsEffects(netease.jsonBody);
+
             })
             .then(() => {
                 ["transfer-encoding", "content-encoding", "content-length"]
@@ -685,6 +697,29 @@ const tryMatch = (ctx) => {
         tasks = jsonBody.data.map((item) => inject(item));
     }
     return Promise.all(tasks).catch(() => {});
+};
+
+const unblockSoundEffects = (obj) => {
+	logger.debug('unblockSoundEffects() has been triggered.');
+	const { data, code } = obj;
+	if (code === 200) {
+		if (Array.isArray(data))
+			data.map((item) => {
+				if (item.type) item.type = 1;
+			});
+		else if (data.type) data.type = 1;
+	}
+};
+
+const unblockLyricsEffects = (obj) => {
+	logger.debug('unblockLyricsEffects() has been triggered.');
+	const { data, code } = obj;
+	if (code === 200 && Array.isArray(data)) {
+		data.forEach((item) => {
+			if ('canUse' in item) item.canUse = true;
+			if ('canNotUseReasonCode' in item) item.canNotUseReasonCode = 200;
+		});
+	}
 };
 
 module.exports = hook;
