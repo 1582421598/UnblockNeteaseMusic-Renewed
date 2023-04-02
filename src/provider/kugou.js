@@ -72,17 +72,23 @@ const single = (song, format) => {
 		song.album.id;
 	return request('GET', url)
 		.then((response) => response.json())
-		.then((jsonBody) => ({
-			url: jsonBody.url[0],
-			weight: weight
-		}) || Promise.reject());
+		.then((result) => {
+			let url = result.find((url) => url);
+			if (url) {
+				return {
+					url: url,
+					weight: weight,
+				};
+			} else Promise.reject();
+		})
+		.catch(() => insure().kugou.track(song));
 };
 
 const track = (song) =>
 	Promise.all(
 		['sqhash', 'hqhash', 'hash']
 		.slice(select.ENABLE_FLAC ? 0 : 1)
-		.map((format) => single(song, format).catch(() => null))
+		.map((format) => single(song, format).catch(() => Promise.reject()))
 	)
 	.then((result) => {
 		let url = result.find((url) => url)

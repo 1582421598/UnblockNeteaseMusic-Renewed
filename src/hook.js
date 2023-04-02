@@ -700,7 +700,6 @@ const tryMatch = (ctx) => {
 };
 
 const unblockSoundEffects = (obj) => {
-	logger.debug('unblockSoundEffects() has been triggered.');
 	const { data, code } = obj;
 	if (code === 200) {
 		if (Array.isArray(data))
@@ -712,7 +711,6 @@ const unblockSoundEffects = (obj) => {
 };
 
 const unblockLyricsEffects = (obj) => {
-	logger.debug('unblockLyricsEffects() has been triggered.');
 	const { data, code } = obj;
 	if (code === 200 && Array.isArray(data)) {
 		data.forEach((item) => {
