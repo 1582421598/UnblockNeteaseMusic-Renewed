@@ -84,7 +84,8 @@ node app.js -o kugou bilibili
 | ---------------------------- | ---- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
 | ENABLE_FLAC                  | bool | 激活无损音质获取                                                                                  | `ENABLE_FLAC=true`                                               |
 | ENABLE_HIRES                 | bool | 激活Hi-Res音质获取                                                                                | `ENABLE_HIRES=true`                                              |
-| ENABLE_LOCAL_VIP             | bool | 激活本地黑胶 VIP                                                                                  | `ENABLE_LOCAL_VIP=true`                                          |
+| ENABLE_LOCAL_VIP             | str  | 激活本地黑胶 VIP，可选值：`true`（等同于 CVIP）、`cvip` 和 `svip`                                 | `ENABLE_LOCAL_VIP=svip`                                          |
+| LOCAL_VIP_UID                | str  | 仅对这些 UID 激活本地黑胶 VIP，默认为对全部用户生效                                               | `LOCAL_VIP_UID=123456789,1234,123456`                            |
 | BLOCK_ADS                    | bool | 屏蔽应用内部分广告                                                                                | `BLOCK_ADS=true`                                                 |
 | DISABLE_UPGRADE_CHECK        | bool | 禁用更新检测。                                                                                    | `DISABLE_UPGRADE_CHECK=true`                                     |
 | JOOX_COOKIE                  | str  | JOOX 音源的 wmid 和 session_key cookie                                                            | `JOOX_COOKIE="wmid=<your_wmid>; session_key=<your_session_key>"` |
