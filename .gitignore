@@ -77,3 +77,5 @@ typings/
 
 # FuseBox cache
 .fusebox/
+# VSCode Configuration
+.vscode/
